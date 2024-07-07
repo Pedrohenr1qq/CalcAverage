@@ -286,13 +286,13 @@ function validateValue(value, typeValue){
     if(typeValue == "number"){
         while(validateNumber(value) < 0){                                           //Enquanto o valor fornedcido não for um número, continuar a pedir um novo valor
             console.log("\nThis value is a invalid number. Please, try again.");
-            value = getUserInput("Type a new value: ", typeValue);
+            value = getUserInput("Type a new value", typeValue);
         }
     }
     else if(typeValue == "string"){
         while(validateString(value) < 0){                                           //Enquanto o valor fornedcido não for uma string, continuar a pedir um novo valor
             console.log("\nThis value is a invalid string. Please, try again.");        
-            value = getUserInput("Type a new value: ", typeValue);
+            value = getUserInput("Type a new value", typeValue);
         }
     }
     else {
