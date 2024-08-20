@@ -240,6 +240,7 @@ function addSubjects(){
 function createStudent(){
     let student = new Object();
     student['name'] = getName();
+    console.log(`Welcome ${student['name']}`);
     console.log("Lets add your subjects. ");
     student['subjects'] = addSubjects();
 
@@ -261,36 +262,39 @@ function createStudent(){
 // ========================== VALIDATE FUNCTIONS ===============================
 // Função para verificar se um valor dado é um número e se é um numero positivo
 function validateNumber(value){
-    let isNumber = (!isNaN(value));
-    let isPositive = (value >= 0);
+    let valorNumerico = !(isNaN(value));   // Se não (não é um número), é um número
+    let valorPositivo = (value >= 0);
+    let valorNaoVazio = (value != "");
 
-    if(isNumber && isPositive){
-        return value;
-    }
-    else {
-        return -1;  //retorna -1 caso o valor não seja um numero ou seja um numero negativo
-    }   
+    let valorValido = ((valorNumerico) && (valorPositivo) && valorNaoVazio);
+
+    return valorValido;
 }
 
 // Função para verificar se um valor não é um número, ou seja, uma string (Tive que me restringir a somente essas duas possibilidades)
 function validateString(value){
-    let isString = isNaN(value); //Se não é um numero, é uma string
-    
-    return ( (isString) ? value : -1 ); //retorna -1 caso o valor seja um número
+    let valorNaoNumerico = !(validateNumber(value));    // Se não é um número, é, possívelmente, uma string
+    let valorNaoVazio = (value != "");                     
+
+    let valorValido = ((valorNaoNumerico) && (valorNaoVazio));
+
+    return valorValido;
 }
 
 // Função para verificar se um valor é um número ou uma string, a depender do desejado
 // Essa função é um compilado das outras duas funções anteriores, para facilitar o uso.
 // Além disso, a função continua até que seja fornecido um valor valido, sem que o código quebre
 function validateValue(value, typeValue){
+
     if(typeValue == "number"){
-        while(validateNumber(value) < 0){                                           //Enquanto o valor fornedcido não for um número, continuar a pedir um novo valor
+        while(!validateNumber(value)){                                           //Enquanto o valor fornedcido não for um número, continuar a pedir um novo valor
             console.log("\nThis value is a invalid number. Please, try again.");
             value = getUserInput("Type a new value", typeValue);
         }
     }
     else if(typeValue == "string"){
-        while(validateString(value) < 0){                                           //Enquanto o valor fornedcido não for uma string, continuar a pedir um novo valor
+        value = value.replace(/[^a-zA-Z\s]/g,''); 
+        while(!validateString(value)){                                           //Enquanto o valor fornedcido não for uma string, continuar a pedir um novo valor
             console.log("\nThis value is a invalid string. Please, try again.");        
             value = getUserInput("Type a new value", typeValue);
         }
